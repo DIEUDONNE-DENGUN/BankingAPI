@@ -19,7 +19,7 @@ class CreateTransactionLogsTable extends Migration
             $table->double('previous_balance', 8, 2);
             $table->double('current_balance', 8, 2);
             $table->integer('amount');
-            $table->string('transaction_type', 10);
+            $table->string('transaction_type', 15);
             $table->timestamps();
         });
     }

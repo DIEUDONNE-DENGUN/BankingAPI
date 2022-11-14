@@ -5,6 +5,7 @@ namespace App\Customer\Accounts\Models;
 
 
 use App\Customer\Profile\Models\User;
+use App\Customer\Transfers\Models\Transfer;
 use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
@@ -14,6 +15,11 @@ class Account extends Model
 
     public function customer()
     {
-        return $this->belongsTo(User::class,'customer_id');
+        return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function transfers()
+    {
+        return $this->hasMany(Transfer::class, 'sender_id');
     }
 }

@@ -64,6 +64,10 @@ class AccountController extends Controller
         return response()->json($balanceResponse);
     }
 
+    /**
+     * update customer bank account details
+     * @param integer $accountId
+     */
     public function updateBankAccountDetails($accountId, UpdateAccountRequest $request)
     {
         $this->accountService->updateCustomerBankAccount($accountId, $request->getAccountDTO());

@@ -6,6 +6,7 @@ use App\Customer\Accounts\Exceptions\AccountNotFoundException;
 use App\Customer\Profile\Exceptions\InvalidUsernamePasswordException;
 use App\Customer\Profile\Exceptions\UserAccountDeactivated;
 use App\Customer\Profile\Exceptions\UserEmailAlreadyExistException;
+use App\Customer\Transfers\Exceptions\InsufficientBalanceException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -73,6 +74,14 @@ class Handler extends ExceptionHandler
                 'code' => "ACCESS DENIED",
                 'path' => $request->path()
             ], 403);
+        }
+        //InsufficientBalanceException
+        if ($exception instanceof InsufficientBalanceException && $request->wantsJson()) {
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'code' => "INSUFFICIENT FUND",
+                'path' => $request->path()
+            ], 409);
         }
         return parent::render($request, $exception);
     }

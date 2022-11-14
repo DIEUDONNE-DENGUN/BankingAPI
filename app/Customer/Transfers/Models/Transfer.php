@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Customer\Transfers\Models;
 
 
@@ -13,6 +12,6 @@ class Transfer extends \Illuminate\Database\Eloquent\Model
 
     public function account()
     {
-        return $this->belongsTo(Account::class);
+        return $this->belongsTo(Account::class, 'sender_id');
     }
 }

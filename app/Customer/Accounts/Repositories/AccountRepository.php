@@ -8,9 +8,9 @@ use \App\Customer\Commons\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @param Model $model
  * @author Dieudonne Takougang
  *  AccountRepository to handle all data layer crud operations
- * @param Model $model
  * @package App\Customer\Accounts\Repositories
  */
 class AccountRepository extends BaseRepository
@@ -29,5 +29,26 @@ class AccountRepository extends BaseRepository
     {
         $relationships = ['customer'];
         return parent::findById($accountId, $relationships);
+    }
+
+    /**
+     * find user bank account by account number
+     * @param $accountNumber
+     * @return Model
+     */
+    public function findAccountByNumber($accountNumber)
+    {
+        return $this->model->where('account_number', $accountNumber)->first();
+    }
+
+    /**
+     * check if an account id belongs to a given customer or user
+     * @param Model $account
+     * @param integer $customerId
+     * @return boolean
+     */
+    public function customerHasAccount($customerId, $account)
+    {
+        return $account->customer_id == $customerId;
     }
 }

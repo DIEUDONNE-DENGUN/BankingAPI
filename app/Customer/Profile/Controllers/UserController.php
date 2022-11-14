@@ -47,6 +47,7 @@ class UserController extends Controller
     public function login(LoginUserRequest $request)
     {
         $accessToken = $this->userService->login($request->getUserLoginDTO());
+
         return response()->json($accessToken);
     }
 

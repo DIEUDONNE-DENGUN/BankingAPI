@@ -54,7 +54,7 @@ class UserService
         //login successful, get user details
         $user = $this->userRepository->findUserByEmail($userDTO['email']);
         $accessToken = $user->createToken('authToken')->plainTextToken;
-        return ['accessToken' => $accessToken, 'TokenType' => 'Bearer'];
+        return ['userId' => $user->id, 'accessToken' => $accessToken, 'TokenType' => 'Bearer'];
     }
 
     /**

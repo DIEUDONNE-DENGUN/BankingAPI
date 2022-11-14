@@ -8,6 +8,7 @@ use App\Customer\Accounts\Requests\UpdateAccountRequest;
 use App\Customer\Accounts\Responses\AccountResponse;
 use App\Customer\Accounts\Services\AccountService;
 use \App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 /**
  * @param AccountService $accountService
@@ -39,6 +40,7 @@ class AccountController extends Controller
     }
 
     /**
+     * get bank account details by id
      * @param $accountId
      * @return
      */
@@ -47,6 +49,17 @@ class AccountController extends Controller
         $account = $this->accountService->findCustomerBankAccountById($accountId);
         $accountResponse = new AccountResponse($account);
         return response()->json($accountResponse);
+    }
+
+    /**
+     * get account balance for a specific account
+     * @param integer $accountId
+     */
+    public function getBankAccountBalance($accountId, Request $request)
+    {
+        $account = $this->accountService->findCustomerBankAccountById($accountId);
+        $balanceResponse = ['resource' => 'balance', 'resourceUrl' => $request->path(), 'data' => ['accountBalance' => $account->account_balance]];
+        return response()->json($balanceResponse);
     }
 
     public function updateBankAccountDetails($accountId, UpdateAccountRequest $request)

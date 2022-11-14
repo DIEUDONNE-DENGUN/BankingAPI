@@ -26,7 +26,7 @@ class CreateAccountRequest extends FormRequest
     public function rules()
     {
         return ['accountName' => 'required', 'accountCurrency' => 'required', 'accountCountry' => 'required',
-            'customerId' => 'required', 'accountType' => 'required', 'initialDeposit' => 'required|digits'];
+             'accountType' => 'required', 'initialDeposit' => 'required|integer'];
     }
 
     /**
@@ -37,7 +37,7 @@ class CreateAccountRequest extends FormRequest
     public function getAccountDTO()
     {
         return ['account_name' => $this->input('accountName'), 'currency' => $this->input('accountCurrency'),
-            'country' => $this->input('accountCountry'), 'customer_id' => $this->input('customerId'),
+            'country' => $this->input('accountCountry'),
             'account_type' => $this->input('accountType'), 'account_balance' => $this->input('initialDeposit')];
     }
 }

@@ -15,12 +15,12 @@ use \App\Customer\Accounts\Controllers\AccountController;
 |
 */
 //public endpoint for authentication
-Route::prefix('api/v1')->group(function () {
+Route::prefix('v1')->group(function () {
     Route::post('customers', [UserController::class, 'createUserProfile']);
     Route::post('customers/tokens', [UserController::class, 'login']);
 });
 //protected endpoints for the application
-Route::prefix('api/v1')->middleware('auth:sanctum')->group(function () {
+Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('customers/{customerId}/accounts', [UserController::class, 'getUserBankAccounts']);
     Route::post('customers/{customerId}/accounts', [AccountController::class, 'createBankAccount']);
     Route::get('customers/accounts/{accountId}', [AccountController::class, 'getBankAccountById']);

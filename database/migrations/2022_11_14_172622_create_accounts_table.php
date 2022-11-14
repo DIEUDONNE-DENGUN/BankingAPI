@@ -19,8 +19,8 @@ class CreateAccountsTable extends Migration
             $table->string('account_name', 45);
             $table->string('country', 20);
             $table->string('currency', 5);
-            $table->string('account_type', 5);
-            $table->string('account_status', 5);
+            $table->string('account_type', 15);
+            $table->string('account_status', 15);
             $table->foreignId('customer_id');
             $table->double('account_balance', 8, 2);
             $table->timestamps();

@@ -29,10 +29,12 @@ class AccountController extends Controller
      * @param CreateAccountRequest $request
      *
      */
-    public function createBankAccount(CreateAccountRequest $request)
+    public function createBankAccount($customerId,CreateAccountRequest $request)
     {
         //create bank account
-        $account = $this->accountService->createCustomerBankAccount($request->getAccountDTO());
+        $accountDto=$request->getAccountDTO();
+        $accountDto['customer_id']=$customerId;
+        $account = $this->accountService->createCustomerBankAccount($accountDto);
         //map the created model to a response
         $accountResponse = new AccountResponse($account);
         // send back mapped response

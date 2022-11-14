@@ -20,7 +20,7 @@ class CreateTransfersTable extends Migration
             $table->string('description', 100);
             $table->integer('amount');
             $table->string('transaction_id',20);
-            $table->string('transfer_type', 10);
+            $table->string('transfer_type', 15);
             $table->timestamps();
         });
     }

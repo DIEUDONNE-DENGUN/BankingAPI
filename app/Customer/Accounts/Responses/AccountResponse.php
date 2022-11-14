@@ -4,6 +4,7 @@
 namespace App\Customer\Accounts\Responses;
 
 
+use App\Customer\Profile\Responses\UserResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AccountResponse extends JsonResource
@@ -22,13 +23,13 @@ class AccountResponse extends JsonResource
             'data' => [
                 'id' => $this->id,
                 'accountHolderNumber' => $this->account_number,
-                'accountHolderName' => $this->account_name,
+                'accountHolderName' => ucwords($this->account_name),
                 'accountType' => $this->account_type,
-                'accountBalance' => $this->account_balance,
+                'accountBalance' => number_format($this->account_balance,2),
                 'accountCountry' => $this->country,
-                'accountCurrency' => $this->currency,
-                'accountOwner' => (array)$this->customer,
-                'dateOfCreation' => $this->created_at,
+                'accountCurrency' => strtoupper($this->currency),
+                'dateOfCreation' => date('Y-m-d', strtotime($this->created_at)),
+                'accountOwner' => new UserResponse($this->customer),
             ]
         ];
     }

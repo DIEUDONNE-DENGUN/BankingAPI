@@ -3,6 +3,7 @@
 
 namespace App\Customer\Profile\Controllers;
 
+use App\Customer\Accounts\Responses\AccountResponse;
 use App\Customer\Profile\Requests\CreateUserProfileRequest;
 use App\Customer\Profile\Requests\LoginUserRequest;
 use App\Customer\Profile\Responses\UserResponse;
@@ -61,7 +62,7 @@ class UserController extends Controller
         //check if the customer has at least a bank account attached,
         if ($accounts->isEmpty()) return response()->json(['message' => "No associated customer bank accounts found for this user", 'customerId' => $customerId]);
         //user has bank accounts associated
-        $response = ['resource' => 'account', 'resourceUrl' => $request->path(), 'data' => $accounts];
+        $response = ['data' => AccountResponse::collection($accounts)];
         return response()->json($response);
     }
 }

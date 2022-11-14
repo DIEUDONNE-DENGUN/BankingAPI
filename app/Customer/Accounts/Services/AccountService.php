@@ -46,7 +46,7 @@ class AccountService
     {
         $accountExist = $this->accountRepository->findAccountById($accountId);
         //if account does not exist, throw an account not found exception
-        if (empty($accountId)) throw new  AccountNotFoundException("Bank Account not found for the specified account id");
+        if (empty($accountId) || is_null($accountExist)) throw new  AccountNotFoundException("Bank Account not found for the specified account id");
         //if not return the account details
         return $accountExist;
     }

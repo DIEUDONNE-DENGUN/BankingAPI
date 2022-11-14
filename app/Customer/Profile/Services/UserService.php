@@ -50,7 +50,7 @@ class UserService
         //check if user email and password matched, if not throw exception
         if (!Auth::attempt($userDTO)) throw  new InvalidUsernamePasswordException("Invalid email and password combination");
         //check if the user account is active or deactivated, if yes, throw exception
-        if ($this->userRepository->isAccountActive($userDTO['email'])) throw new UserAccountDeactivated("User account is currently inactive and suspended. Kindly contact system admin");
+        if (!$this->userRepository->isAccountActive($userDTO['email'])) throw new UserAccountDeactivated("User account is currently inactive and suspended. Kindly contact system admin");
         //login successful, get user details
         $user = $this->userRepository->findUserByEmail($userDTO['email']);
         $accessToken = $user->createToken('authToken')->plainTextToken;

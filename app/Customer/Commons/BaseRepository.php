@@ -41,7 +41,7 @@ abstract class BaseRepository
     public function findById($item_id, array $relationships = [])
     {
         $relations = implode(",", $relationships);
-        return count($relationships) > 0 ? $this->model->find($item_id)->with($relations) : $this->model->find($item_id);
+        return count($relationships) > 0 ? (!empty($this->model->find($item_id))? $this->model->find($item_id)->with($relations)->first() : null) : $this->model->find($item_id);
     }
 
     /**

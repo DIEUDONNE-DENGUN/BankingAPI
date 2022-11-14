@@ -29,7 +29,12 @@ class CreateAccountRequest extends FormRequest
             'customerId' => 'required', 'accountType' => 'required', 'initialDeposit' => 'required|digits'];
     }
 
-    public function accountDTO()
+    /**
+     * Get the account model details to be mass persisted to the database from the request parameters.
+     *
+     * @return array
+     */
+    public function getAccountDTO()
     {
         return ['account_name' => $this->input('accountName'), 'currency' => $this->input('accountCurrency'),
             'country' => $this->input('accountCountry'), 'customer_id' => $this->input('customerId'),

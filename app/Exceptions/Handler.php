@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Customer\Accounts\Exceptions\AccountNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -37,5 +38,18 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        //handle all custom exceptions for the application
+        if ($exception instanceof AccountNotFoundException && $request->wantsJson()) {
+            return response()->json([
+                'message' => "Customer Account Not Found",
+                'code' => "NOT FOUND",
+                'path' => $request->path()
+            ], 404);
+        }
+        return parent::render($request, $exception);
     }
 }

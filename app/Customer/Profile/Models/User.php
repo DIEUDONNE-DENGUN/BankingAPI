@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Customer\Profile\Models;
 
+use App\Customer\Accounts\Models\Account;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone_number',
+        'customer_type',
         'password',
     ];
 
@@ -41,4 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /*
+     * user (customer) related accounts
+     */
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
 }

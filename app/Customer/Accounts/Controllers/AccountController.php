@@ -46,7 +46,7 @@ class AccountController extends Controller
     {
         $account = $this->accountService->findCustomerBankAccountById($accountId);
         $accountResponse = new AccountResponse($account);
-        return response()->json($accountResponse, 200);
+        return response()->json($accountResponse);
     }
 
     public function updateBankAccountDetails($accountId, UpdateAccountRequest $request)

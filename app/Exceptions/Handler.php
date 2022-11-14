@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use App\Customer\Accounts\Exceptions\AccountNotFoundException;
+use App\Customer\Profile\Exceptions\InvalidUsernamePasswordException;
+use App\Customer\Profile\Exceptions\UserAccountDeactivated;
+use App\Customer\Profile\Exceptions\UserEmailAlreadyExistException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -45,10 +48,31 @@ class Handler extends ExceptionHandler
         //handle all custom exceptions for the application
         if ($exception instanceof AccountNotFoundException && $request->wantsJson()) {
             return response()->json([
-                'message' => "Customer Account Not Found",
+                'message' => $exception->getMessage(),
                 'code' => "NOT FOUND",
                 'path' => $request->path()
             ], 404);
+        }
+        if ($exception instanceof UserEmailAlreadyExistException && $request->wantsJson()) {
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'code' => "EMAIL EXIST",
+                'path' => $request->path()
+            ], 409);
+        }
+        if ($exception instanceof InvalidUsernamePasswordException && $request->wantsJson()) {
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'code' => "BAD REQUEST",
+                'path' => $request->path()
+            ], 401);
+        }
+        if ($exception instanceof UserAccountDeactivated && $request->wantsJson()) {
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'code' => "ACCESS DENIED",
+                'path' => $request->path()
+            ], 403);
         }
         return parent::render($request, $exception);
     }

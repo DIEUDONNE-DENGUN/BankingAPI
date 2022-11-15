@@ -8,7 +8,6 @@ use App\Customer\Transfers\Requests\TransferRequest;
 use App\Customer\Transfers\Responses\TransferResponse;
 use App\Customer\Transfers\Services\TransferService;
 use \App\Http\Controllers\Controller;
-use http\Env\Response;
 use Illuminate\Http\Request;
 
 /**

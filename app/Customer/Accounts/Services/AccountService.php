@@ -72,7 +72,13 @@ class AccountService
     public function updateCustomerBankAccount($accountId, array $account)
     {
         //check if the specific account exist, if yes, update the resource
-        if (!empty($this->findCustomerBankAccountById($accountId))) return $this->accountRepository->update($account, $accountId);
+        $accountExist = $this->findCustomerBankAccountById($accountId);
+        if (!empty($accountExist)){
+            $effectedAccountBalance= (double)$accountExist->account_balance + (double)$account['account_balance'];
+            $account['account_balance']= $effectedAccountBalance;
+            return $this->accountRepository->update($account, $accountId);
+        }
+        return 0;
     }
 
     /**

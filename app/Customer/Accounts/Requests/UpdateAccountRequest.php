@@ -4,7 +4,9 @@
 namespace App\Customer\Accounts\Requests;
 
 
-class UpdateAccountRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateAccountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +25,7 @@ class UpdateAccountRequest
      */
     public function rules()
     {
-        return ['accountName' => 'required', 'initialDeposit' => 'required|digits'];
+        return ['accountName' => 'required', 'depositAmount' => 'required|integer'];
     }
 
     /**
@@ -33,7 +35,7 @@ class UpdateAccountRequest
      */
     public function getAccountDTO()
     {
-        return ['account_name' => $this->input('accountName'), 'account_balance' => $this->input('initialDeposit')];
+        return ['account_name' => $this->input('accountName'), 'account_balance' => $this->input('depositAmount')];
     }
 
 }

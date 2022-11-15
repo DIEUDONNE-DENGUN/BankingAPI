@@ -42,11 +42,12 @@ class TransferService
     {
         $transferStatus = false;
         //put the entire process in a transaction for easy database rollback
-        DB::transaction(function () use ($transfer) {
+        DB::transaction(function () use ($transfer,  &$transferStatus) {
             //get sender's account if exist
             $senderAccount = $this->getBankAccountById($transfer['sender_id']);
             //get receiver's account if exist
-            $receiverAccount = $this->getBankAccountById($transfer['receiver_id']);
+            $receiverAccount = $this->getBankAccountById((string)$transfer['receiver_id']);
+
             //check if the sender has sufficient funds to make the transfer
             $this->canTransferAmount($senderAccount, (double)$transfer['amount']);
             //set the transaction id and type to the transfer DTO
@@ -71,12 +72,12 @@ class TransferService
      * @param $accountId
      * @return \Illuminate\Support\Collection
      */
-    public function getAccountTransferHistory($accountId)
+    public function getAccountTransferHistory($accountId,$pageSize)
     {
         //validate if bank account exist
         $this->getBankAccountById($accountId);
         //get transfer history
-        return $this->transferRepository->transferHistory($accountId);
+        return $this->transferRepository->transferHistory($accountId,$pageSize);
     }
 
     /**
@@ -105,13 +106,13 @@ class TransferService
 
     /**
      * get a user bank account
-     * @param intger $accountId
+     * @param integer $accountId
      * @return Model
      */
     private function getBankAccountById($accountId)
     {
         $account = $this->accountRepository->findAccountById($accountId);
-        if (empty($accountExist) || is_null($accountExist)) throw new  AccountNotFoundException("Bank account does not exist.Not found entity");
+        if (empty($account) || is_null($account)) throw new  AccountNotFoundException("Bank account does not exist.Not found entity");
         return $account;
     }
 
@@ -125,7 +126,7 @@ class TransferService
     private function creditBankAccount($accountId, $currentBalance, $amount)
     {
         $status = false;
-        $effectedBalance = $amount + $currentBalance;
+        $effectedBalance = (double)$amount + (double)$currentBalance;
         $updateBankAccountBalance = ['account_balance' => $effectedBalance];
         $creditAccount = $this->accountRepository->update($updateBankAccountBalance, $accountId);
         if ($creditAccount) {
@@ -147,7 +148,7 @@ class TransferService
     private function debitBankAccount($accountId, $currentBalance, $amount)
     {
         $status = false;
-        $effectedBalance = $currentBalance - $amount;
+        $effectedBalance = (double)$currentBalance - (double)$amount;
         $updateBankAccountBalance = ['account_balance' => $effectedBalance];
         $creditAccount = $this->accountRepository->update($updateBankAccountBalance, $accountId);
         if ($creditAccount) {

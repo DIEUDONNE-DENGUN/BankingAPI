@@ -14,4 +14,9 @@ class Transfer extends \Illuminate\Database\Eloquent\Model
     {
         return $this->belongsTo(Account::class, 'sender_id');
     }
+
+    public function receiver()
+    {
+        return $this->belongsTo(Account::class, 'receiver_id');
+    }
 }

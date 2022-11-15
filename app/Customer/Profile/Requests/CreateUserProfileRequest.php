@@ -25,7 +25,7 @@ class CreateUserProfileRequest extends FormRequest
     public function rules()
     {
         return ['customerName' => 'required', 'customerPhoneNumber' => 'required|min:9', 'customerEmail' => 'required|email',
-            'password' => 'required|min:8', 'customerType' => 'required',];
+            'password' => 'required|min:8', 'customerType' => 'required|max:10',];
     }
 
     /**

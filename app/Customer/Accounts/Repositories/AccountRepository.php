@@ -28,6 +28,7 @@ class AccountRepository extends BaseRepository
     public function findAccountById($accountId)
     {
         $relationships = ['customer'];
+
         return parent::findById($accountId, $relationships);
     }
 

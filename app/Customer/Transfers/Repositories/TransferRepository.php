@@ -38,9 +38,9 @@ class TransferRepository extends BaseRepository
     /**
      * get a paginated list of user bank account transfer history
      */
-    public function transferHistory($accountId)
+    public function transferHistory($accountId,$pageSize)
     {
-        $pageSize = 1;
-        return $this->model->where('sender_id', $accountId)->paginate($pageSize);
+        //$pageSize = 20;
+        return $this->model->where('sender_id', $accountId)->with('receiver','account')->paginate($pageSize);
     }
 }

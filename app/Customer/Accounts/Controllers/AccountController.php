@@ -60,7 +60,7 @@ class AccountController extends Controller
     public function getBankAccountBalance($accountId, Request $request)
     {
         $account = $this->accountService->findCustomerBankAccountById($accountId);
-        $balanceResponse = ['resource' => 'balance', 'resourceUrl' => $request->path(), 'data' => ['accountBalance' => $account->account_balance]];
+        $balanceResponse = ['resource' => 'balance', 'resourceUrl' => $request->path(), 'data' => ['accountBalance' => number_format($account->account_balance,2)]];
         return response()->json($balanceResponse);
     }
 

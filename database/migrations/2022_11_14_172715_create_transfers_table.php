@@ -19,8 +19,8 @@ class CreateTransfersTable extends Migration
             $table->foreignId('receiver_id');
             $table->string('description', 100);
             $table->integer('amount');
-            $table->string('transaction_id',20);
-            $table->string('transfer_type', 15);
+            $table->string('transaction_id',45);
+            $table->string('transfer_type', 45);
             $table->timestamps();
         });
     }

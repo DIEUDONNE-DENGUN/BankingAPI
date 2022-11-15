@@ -24,7 +24,7 @@ class TransferRequest extends FormRequest
      */
     public function rules()
     {
-        return ['receiverAccountNumber' => 'required|min:16', 'amount' => 'required|integer', 'paymentReason' => 'required|max:100',];
+        return ['receiverAccountNumber' => 'required|min:12', 'amount' => 'required|integer', 'paymentReason' => 'required|max:100'];
     }
 
     /**

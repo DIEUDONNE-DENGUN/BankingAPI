@@ -5,8 +5,11 @@ namespace App\Customer\Transfers\Controllers;
 
 use App\Customer\Accounts\Services\AccountService;
 use App\Customer\Transfers\Requests\TransferRequest;
+use App\Customer\Transfers\Responses\TransferResponse;
 use App\Customer\Transfers\Services\TransferService;
 use \App\Http\Controllers\Controller;
+use http\Env\Response;
+use Illuminate\Http\Request;
 
 /**
  * @param $transferService
@@ -33,7 +36,7 @@ class TransferController extends Controller
         $transferDto = $request->getTransferDTO();
         $accountNumber = $transferDto['receiver_id'];
         //find the receiver account by account number
-        $account = $accountService->findCustomerBankAccountByAccountNumber($transferDto['account_id']);
+        $account = $accountService->findCustomerBankAccountByAccountNumber($accountNumber);
         $transferDto['receiver_id'] = $account->id;
         $transferDto['sender_id'] = $accountId;
         //make account to account transfer
@@ -50,8 +53,15 @@ class TransferController extends Controller
      * @param $customerId
      * @param $accountId
      */
-    public function getAccountTransferHistory($customerId, $accountId)
+    public function getAccountTransferHistory($customerId, $accountId, Request $request)
     {
-        $transfers = $this->transferService->getAccountTransferHistory($accountId);
+        //check if page size is part of the request
+        $pageSize = !empty($request->get('pageSize')) ? $request->get('pageSize') : 10;
+        $transfers = $this->transferService->getAccountTransferHistory($accountId, $pageSize);
+        //check if any transfers exist
+        if ($transfers->isEmpty()) return response()->json(['resource' => 'transfers', 'resourceUrl' => $request->path(), 'message' => "Bank account doesn't currently have any bank transfers yet", 'data' => []]);
+        //transfer available, build and map response and send
+        $response = ['data' => TransferResponse::collection($transfers)];
+        return response()->json($response);
     }
 }

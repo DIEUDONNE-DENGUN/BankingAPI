@@ -52,7 +52,7 @@
     Mysql Database
     Laravel Sanctum for authentication and authorization
 
-### Api Documentation
+### API Documentation
 A Postman API collection and documentation is published here : ***[BankingAPI Postman Doc](https://documenter.getpostman.com/view/11921397/2s8YmHxQxh)***
 ### Last Thought
     Thank you for taking the time in testing the project. Would appreciate feedback

@@ -23,8 +23,8 @@
 ### Core Business Components
 
 * Customer Bank Account Component (Account Domain)
-* Customer 
-* Web Application Client Interface
+* Customer Profile Component (User Domain)
+* Customer Account to Account Transfer (Transfer Domain)
 ### Server Requirements  
       * PHP >= 7.3
       * BCMath PHP Extension

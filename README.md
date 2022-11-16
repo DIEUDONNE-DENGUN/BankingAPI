@@ -51,7 +51,8 @@
     Laravel ^8.75
     Mysql Database
     Laravel Sanctum for authentication and authorization
-
+### Testing
+     To run test cases, open root project directory on terminal and run command : "php artisan test"
 ### API Documentation
 A Postman API collection and documentation is published here : ***[BankingAPI Postman Doc](https://documenter.getpostman.com/view/11921397/2s8YmHxQxh)***
 ### Last Thought
